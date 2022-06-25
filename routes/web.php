@@ -51,6 +51,11 @@ Route::get('/pesanan/index', [App\Http\Controllers\PesananaController::class, 'i
 Route::get('/pembayaran/index', [App\Http\Controllers\PembayaranController::class, 'index'])->name('pembayaran.index');
 
 Route::get('/barang/index', [App\Http\Controllers\BarangController::class, 'index'])->name('barang.index');
+Route::get('/barang/create', [App\Http\Controllers\BarangController::class, 'create'])->name('barang.create');
+Route::post('/barang/store', [App\Http\Controllers\BarangController::class, 'store'])->name('barang.store');
+Route::get('/barang/destroy/{idBarang}', [App\Http\Controllers\BarangController::class, 'destroy'])->name('barang.destroy');
+Route::get('/barang/edit/{idBarang}', [App\Http\Controllers\BarangController::class, 'edit'])->name('barang.edit');
+Route::post('/barang/update/{id}', [App\Http\Controllers\BarangController::class, 'update'])->name('barang.update');
 
 Route::get('/saran/index', [App\Http\Controllers\SaranController::class, 'index'])->name('saran.index');
 
