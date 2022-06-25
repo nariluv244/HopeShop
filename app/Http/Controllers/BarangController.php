@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use DB;
 
 class BarangController extends Controller
 {
@@ -14,7 +16,8 @@ class BarangController extends Controller
      */
     public function index()
     {
-        //
+        $data = DB::table('barang')->get();
+        return view('admin.barang.index',compact('data'));
     }
 
     /**
@@ -24,7 +27,7 @@ class BarangController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.barang.create');
     }
 
     /**
@@ -35,7 +38,20 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $file = $request->file('foto');
+        $filename = time() . Str::slug($request->NamaBarang) . '.' . $file->getClientOriginalExtension();
+        $file->move('public/barang', $filename);
+    
+                
+        
+              $barang = new Barang();
+              $barang->NamaBarang = $request->NamaBarang;
+              $barang->HargaBarang = $request->HargaBarang;
+              $barang->StokBarang = $request->StokBarang;
+              $barang->JenisBarang = $request->JenisBarang;
+              $barang->foto = $filename;
+              $barang->save();
+              return redirect('/barang/index');
     }
 
     /**
@@ -55,9 +71,13 @@ class BarangController extends Controller
      * @param  \App\Models\Barang  $barang
      * @return \Illuminate\Http\Response
      */
-    public function edit(Barang $barang)
+    public function edit($id)
     {
-        //
+        $data = DB::table('barang as b')
+        ->select('b.*')
+        ->where('b.idBarang', $id)
+        ->first();
+        return view('admin.barang.edit', compact('data'));
     }
 
     /**
@@ -67,9 +87,22 @@ class BarangController extends Controller
      * @param  \App\Models\Barang  $barang
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Barang $barang)
+    public function update(Request $request, $id)
     {
-        //
+        
+        $file = $request->file('foto');
+        $filename = time() . Str::slug($request->NamaBarang) . '.' . $file->getClientOriginalExtension();
+        $file->move('public/barang', $filename);
+    
+        $barang = Barang::find($id);
+        $barang->NamaBarang = $request->NamaBarang;
+        $barang->HargaBarang = $request->HargaBarang;
+        $barang->StokBarang = $request->StokBarang;
+        $barang->JenisBarang = $request->JenisBarang;
+        $barang->foto = $filename;
+        $barang->save();
+        return redirect()->route('barang.index')
+        ->with('sukses','Company Has Been updated successfully');
     }
 
     /**
@@ -78,8 +111,9 @@ class BarangController extends Controller
      * @param  \App\Models\Barang  $barang
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Barang $barang)
+    public function destroy($id)
     {
-        //
+        Barang::where('idBarang',$id)->delete();
+        return Redirect()->back();
     }
 }
