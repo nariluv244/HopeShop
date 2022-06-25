@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Saran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SaranController extends Controller
 {
@@ -14,7 +15,9 @@ class SaranController extends Controller
      */
     public function index()
     {
-        //
+        $saran = DB::table('saran')->get();
+      
+        return view('admin.saran.index', ['saran' => $saran]);
     }
 
     /**
@@ -24,7 +27,7 @@ class SaranController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.Saran.tambah');
     }
 
     /**
@@ -35,7 +38,13 @@ class SaranController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::table('saran')->insert([
+            'NamaUser' => $request->NamaUser,
+            'Email' => $request->email,
+            'Saran' => $request->saran
+        ]);
+       
+        return redirect('saran/index');
     }
 
     /**
@@ -78,8 +87,11 @@ class SaranController extends Controller
      * @param  \App\Models\Saran  $saran
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Saran $saran)
+    public function destroy($id)
     {
-        //
+        DB::table('saran')->where('idSaran',$id)->delete();
+		
+
+	return redirect('saran/index');
     }
 }

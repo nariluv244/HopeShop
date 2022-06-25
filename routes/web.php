@@ -43,7 +43,6 @@ Route::get('/user/tambah', [App\Http\Controllers\UserController::class, 'create'
 Route::post('/user/store', [App\Http\Controllers\UserController::class, 'store'])->name('user.store');
 Route::get('/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit'])->name('user.edit');
 Route::post('/user/update', [App\Http\Controllers\UserController::class, 'update'])->name('user.update');
-
 Route::get('/user/hapus/{id}',[App\Http\Controllers\UserController::class, 'destroy'])->name('user.destroy');
 
 Route::get('/pesanan/index', [App\Http\Controllers\PesananaController::class, 'index'])->name('pesanan.index');
@@ -53,9 +52,9 @@ Route::get('/pembayaran/index', [App\Http\Controllers\PembayaranController::clas
 Route::get('/barang/index', [App\Http\Controllers\BarangController::class, 'index'])->name('barang.index');
 
 Route::get('/saran/index', [App\Http\Controllers\SaranController::class, 'index'])->name('saran.index');
-
-
-
+Route::get('/saran/tambah', [App\Http\Controllers\SaranController::class, 'create'])->name('saran.create');
+Route::post('/saran/store', [App\Http\Controllers\SaranController::class, 'store'])->name('saran.store');
+Route::get('/saran/hapus/{id}',[App\Http\Controllers\SaranController::class, 'destroy'])->name('saran.destroy');
 
 });
 

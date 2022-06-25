@@ -190,6 +190,9 @@
                                 <li>
                                     <a href="{{route('barang.index')}}">Data Produk</a>
                                 </li>
+                                <li>
+                                    <a href="{{route('saran.index')}}">Saran</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
